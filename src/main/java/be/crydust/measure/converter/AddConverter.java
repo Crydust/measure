@@ -1,12 +1,12 @@
-package be.crydust.measure;
+package be.crydust.measure.converter;
 
+import be.crydust.measure.UnitConverter;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
 public class AddConverter implements UnitConverter {
 
     private final BigDecimal offset;
-    private static final BigDecimal MINUS_ONE = new BigDecimal("-1");
     private static final MathContext MATHCONTEXT = MathContext.DECIMAL128;
 
     public AddConverter(BigDecimal offset) {
@@ -15,11 +15,16 @@ public class AddConverter implements UnitConverter {
 
     @Override
     public UnitConverter inverse() {
-        return new AddConverter(offset.multiply(MINUS_ONE, MATHCONTEXT));
+        return new SubtractConverter(offset);
     }
 
     @Override
     public BigDecimal convert(BigDecimal value) throws ArithmeticException {
-        return value.add(offset, MATHCONTEXT);
+        return convert(value, MATHCONTEXT);
+    }
+
+    @Override
+    public BigDecimal convert(BigDecimal value, MathContext ctx) throws ArithmeticException {
+        return value.add(offset, ctx);
     }
 }

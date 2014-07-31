@@ -1,5 +1,6 @@
-package be.crydust.measure;
+package be.crydust.measure.converter;
 
+import be.crydust.measure.UnitConverter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.MathContext;
@@ -25,10 +26,15 @@ public class RationalConverter implements UnitConverter {
 
     @Override
     public BigDecimal convert(BigDecimal value) {
+        return convert(value, MATHCONTEXT);
+    }
+
+    @Override
+    public BigDecimal convert(BigDecimal value, MathContext ctx) throws ArithmeticException {
         BigDecimal decimalDividend = new BigDecimal(dividend);
         BigDecimal decimalDivisor = new BigDecimal(divisor);
         return value
-                .multiply(decimalDividend, MATHCONTEXT)
-                .divide(decimalDivisor, MATHCONTEXT);
+                .multiply(decimalDividend, ctx)
+                .divide(decimalDivisor, ctx);
     }
 }

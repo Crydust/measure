@@ -4,10 +4,16 @@ import java.util.Objects;
 
 public class Dimension {
 
+    private final String description;
     private final String symbol;
     
-    Dimension(String symbol) {
+    Dimension(String description, String symbol) {
+        this.description = description;
         this.symbol = symbol;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getSymbol() {

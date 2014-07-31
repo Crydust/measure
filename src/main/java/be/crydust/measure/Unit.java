@@ -22,6 +22,8 @@ public class Unit {
         assert description != null && !description.isEmpty();
         assert symbol != null && !symbol.isEmpty();
         assert converters != null;
+        assert (parent == null && converters.length == 0)
+                || (parent != null && dimension.equals(parent.getDimension()));
         this.dimension = dimension;
         this.symbol = symbol;
         this.description = description;

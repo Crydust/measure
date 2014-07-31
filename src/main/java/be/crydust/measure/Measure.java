@@ -11,13 +11,17 @@ public class Measure {
     private final Unit unit;
 
     public Measure(BigDecimal value, Unit unit) {
-        this.value = value;
+        // stripping the trailing zeros helps tremendously when comparing BigDecimals
+        this.value = value.stripTrailingZeros();
         this.unit = unit;
     }
 
     public Measure convertTo(Unit otherUnit) {
         if (unit.equals(otherUnit)) {
             return this;
+        }
+        if (!unit.getDimension().equals(otherUnit.getDimension())){
+            throw new IllegalArgumentException("cannot convert to unit with other dimension");
         }
         List<UnitConverter> unitConverters = new ArrayList<>(unit.getConverters());
         Unit parent = unit.getParent();
@@ -74,10 +78,7 @@ public class Measure {
         }
         final Measure other = (Measure) obj;
         if (!Objects.equals(this.value, other.value)) {
-            // close enough?
-            //if (!(this.value.subtract(other.value, MathContext.DECIMAL128).abs().subtract(DELTA, MathContext.DECIMAL128).stripTrailingZeros().compareTo(BigDecimal.ZERO) <= 0)) {
             return false;
-            //}
         }
         if (!Objects.equals(this.unit, other.unit)) {
             return false;
@@ -87,7 +88,7 @@ public class Measure {
 
     @Override
     public String toString() {
-        return String.format("%s %s", value.toPlainString(), unit.getSymbol());
+        return String.format("%s %s", value.stripTrailingZeros().toPlainString(), unit.getSymbol());
     }
 
 }
