@@ -4,7 +4,7 @@
     
     <groupId>be.crydust</groupId>
     <artifactId>measure</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     
     <name>measure</name>
@@ -22,7 +22,8 @@
         <url>https://github.com/Crydust/measure</url>
         <connection>scm:git:git://github.com/Crydust/measure.git</connection>
         <developerConnection>scm:git:git@github.com:Crydust/measure.git</developerConnection>
-    </scm>
+      <tag>measure-1.0</tag>
+  </scm>
     
     <dependencies>
         <dependency>
