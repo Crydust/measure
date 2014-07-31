@@ -1,15 +1,12 @@
 package be.crydust.measure.converter;
 
 import be.crydust.measure.UnitConverter;
-import java.math.BigDecimal;
-import java.math.MathContext;
 
 public class SubtractConverter implements UnitConverter {
 
-    private final BigDecimal offset;
-    private static final MathContext MATHCONTEXT = MathContext.DECIMAL128;
+    private final double offset;
 
-    public SubtractConverter(BigDecimal offset) {
+    public SubtractConverter(double offset) {
         this.offset = offset;
     }
 
@@ -19,13 +16,8 @@ public class SubtractConverter implements UnitConverter {
     }
 
     @Override
-    public BigDecimal convert(BigDecimal value) throws ArithmeticException {
-        return convert(value, MATHCONTEXT);
-    }
-
-    @Override
-    public BigDecimal convert(BigDecimal value, MathContext ctx) throws ArithmeticException {
-        return value.subtract(offset, ctx);
+    public double convert(double value) {
+        return value - offset;
     }
 
 }

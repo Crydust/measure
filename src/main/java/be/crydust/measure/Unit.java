@@ -47,7 +47,7 @@ public class Unit {
         return symbol;
     }
 
-    public Unit getParent() {
+    Unit getParent() {
         return parent == null ? this : parent;
     }
 

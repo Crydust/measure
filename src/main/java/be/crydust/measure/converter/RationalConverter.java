@@ -1,18 +1,14 @@
 package be.crydust.measure.converter;
 
 import be.crydust.measure.UnitConverter;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
 
 public class RationalConverter implements UnitConverter {
-    
-    private final BigInteger dividend;
-    private final BigInteger divisor;
-    private static final MathContext MATHCONTEXT = MathContext.DECIMAL128;
 
-    public RationalConverter(BigInteger dividend, BigInteger divisor) {
-        if (BigInteger.ZERO.equals(divisor)){
+    private final double dividend;
+    private final double divisor;
+
+    public RationalConverter(double dividend, double divisor) {
+        if (divisor == 0.0) {
             throw new IllegalArgumentException("Zero divisor");
         }
         this.dividend = dividend;
@@ -25,16 +21,7 @@ public class RationalConverter implements UnitConverter {
     }
 
     @Override
-    public BigDecimal convert(BigDecimal value) {
-        return convert(value, MATHCONTEXT);
-    }
-
-    @Override
-    public BigDecimal convert(BigDecimal value, MathContext ctx) throws ArithmeticException {
-        BigDecimal decimalDividend = new BigDecimal(dividend);
-        BigDecimal decimalDivisor = new BigDecimal(divisor);
-        return value
-                .multiply(decimalDividend, ctx)
-                .divide(decimalDivisor, ctx);
+    public double convert(double value) {
+        return value * dividend / divisor;
     }
 }

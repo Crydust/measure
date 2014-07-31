@@ -1,18 +1,17 @@
 package be.crydust.measure;
 
-import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Measure {
 
-    private final BigDecimal value;
+    private final double value;
     private final Unit unit;
 
-    public Measure(BigDecimal value, Unit unit) {
-        // stripping the trailing zeros helps tremendously when comparing BigDecimals
-        this.value = value.stripTrailingZeros();
+    public Measure(double value, Unit unit) {
+        this.value = value;
         this.unit = unit;
     }
 
@@ -36,7 +35,7 @@ public class Measure {
             otherParent = otherParent.getParent();
         }
         if (parent.equals(otherParent)) {
-            BigDecimal convertedValue = value;
+            double convertedValue = value;
             // convert to parent
             for (int i = unitConverters.size() - 1; i >= 0; i--) {
                 convertedValue = unitConverters.get(i)
@@ -52,7 +51,7 @@ public class Measure {
         throw new IllegalArgumentException("cannot convert to unit with other parent");
     }
 
-    public BigDecimal getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -88,7 +87,7 @@ public class Measure {
 
     @Override
     public String toString() {
-        return String.format("%s %s", value.stripTrailingZeros().toPlainString(), unit.getSymbol());
+        return String.format("%s %s", new DecimalFormat("#.##").format(value), unit.getSymbol());
     }
 
 }

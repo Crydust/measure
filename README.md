@@ -5,16 +5,25 @@ A simple replacement for jsr-275, but with a slightly different api.
 
 The commandline app can be used as such:
 
-    java -jar measure.jar 37 °C °F
+    $ java -jar measure.jar 37 °C °F
+    1 °C = 33.8 °F
 
 The KitchenUnitSystem class can be used when you need a String -> Unit mapping.
 Obviously You can create your own UnitSystems, KitchenUnitSystem is merely an example.
 Each Unit has a unique symbol, so store that in the database when persisting Units.
 
-    KitchenUnitSystem kitchen = KitchenUnitSystem.getInstance();
     Measure bodyheatInFahrenheit = new Measure(
-            BigDecimal.valueOf(37L), kitchen.getUnit("°C"))
-            .convertTo(kitchen.getUnit("°F"));
+            37.0, KitchenUnitSystem.CELSIUS)
+            .convertTo(KitchenUnitSystem.FAHRENHEIT);
+    System.out.println(bodyheatInFahrenheit.toString());
+    // prints "98.6 °F"
+
+    KitchenUnitSystem kitchen = KitchenUnitSystem.getInstance();
+    double input = 37.0;
+    Unit celcius = kitchen.getUnit("°C");
+    Unit fahrenheit = kitchen.getUnit("°F");
+    Measure bodyheatInFahrenheit = new Measure(input, celcius)
+            .convertTo(fahrenheit);
     System.out.println(bodyheatInFahrenheit.toString());
     // prints "98.6 °F"
 
@@ -28,8 +37,6 @@ These are the supported dimensions and units:
  * T = Temperature:
     * °C = Celsius
     * °F = Fahrenheit
-    * K = Kelvin
-    * °R = Rankine
  * V = Volume:
     * gal_br = Gallon (Imperial)
     * gal_us = Gallon (US)
@@ -44,7 +51,5 @@ These are the supported dimensions and units:
     * dl = Deciliter
     * cl = Centiliter
     * ml = Milliliter
-    * m³ = Cubic meter
-    * in³ = Cubic inch
     * qt_br = Quart (Imperial)
     * pt_br = Pint (Imperial)

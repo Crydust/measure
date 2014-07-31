@@ -1,7 +1,5 @@
 package be.crydust.measure;
 
-import java.math.BigDecimal;
-
 public class App {
 
     public static void main(String[] args) {
@@ -17,7 +15,7 @@ public class App {
         final String originalUnitSymbol = args[1];
         final String convertedUnitSymbol = args[2];
         Measure original = new Measure(
-                new BigDecimal(originalValueAsString),
+                Double.parseDouble(originalValueAsString),
                 kitchen.getUnit(originalUnitSymbol));
         Measure converted = original
                 .convertTo(kitchen.getUnit(convertedUnitSymbol));
