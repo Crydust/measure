@@ -1,6 +1,7 @@
 package be.crydust.measure;
 
 import static be.crydust.measure.KitchenUnitSystem.*;
+import java.math.BigDecimal;
 import static org.hamcrest.Matchers.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,6 +14,10 @@ public class KitchenUnitSystemTest {
         Measure zeroGram = new Measure(0.0, GRAM);
         assertThat(zeroKilogram, is(not(zeroGram)));
         Measure convertedToGram = zeroKilogram.convertTo(GRAM);
+        assertThat(convertedToGram.getValue(),
+                is(zeroKilogram.getValue()));
+        assertThat(convertedToGram.getBigDecimalValue(),
+                is(closeTo(zeroKilogram.getBigDecimalValue(), BigDecimal.ZERO)));
         assertThat(convertedToGram, is(zeroGram));
         Measure convertedToKilogram = convertedToGram.convertTo(KILOGRAM);
         assertThat(convertedToKilogram, is(zeroKilogram));
@@ -31,11 +36,10 @@ public class KitchenUnitSystemTest {
     public void aMeasureMustBeConvertibleFromOneCelsiusToFahrenheit() {
         Measure oneCelsius = new Measure(1.0, CELSIUS);
         Measure thirtyThreePointEightFahrenheit = new Measure(33.8, FAHRENHEIT);
-        double delta = 1E-13;
         assertThat(oneCelsius.convertTo(FAHRENHEIT).getValue(),
-                is(closeTo(thirtyThreePointEightFahrenheit.getValue(), delta)));
+                is(thirtyThreePointEightFahrenheit.getValue()));
         assertThat(thirtyThreePointEightFahrenheit.convertTo(CELSIUS).getValue(),
-                is(closeTo(oneCelsius.getValue(), delta)));
+                is(oneCelsius.getValue()));
     }
 
     @Test

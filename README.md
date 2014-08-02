@@ -6,7 +6,7 @@ A simple replacement for jsr-275, but with a slightly different api.
 The commandline app can be used as such:
 
     $ java -jar measure.jar 37 °C °F
-    1 °C = 33.8 °F
+    37 °C = 98.6 °F
 
 The KitchenUnitSystem class can be used when you need a String -> Unit mapping.
 Obviously You can create your own UnitSystems, KitchenUnitSystem is merely an example.

@@ -4,6 +4,7 @@ import be.crydust.measure.converter.AddConverter;
 import be.crydust.measure.converter.DivideConverter;
 import be.crydust.measure.converter.MultiplyConverter;
 import be.crydust.measure.converter.RationalConverter;
+import java.math.BigDecimal;
 
 public final class KitchenUnitSystem extends UnitSystem {
 
@@ -25,13 +26,13 @@ public final class KitchenUnitSystem extends UnitSystem {
     private static final Unit KELVIN = new Unit(TEMPERATURE, "Kelvin", "K");
     public static final Unit CELSIUS = new Unit(TEMPERATURE, "Celsius", "°C",
             KELVIN,
-            new AddConverter(273.15));
+            new AddConverter(new BigDecimal("273.15")));
     private static final Unit RANKINE = new Unit(TEMPERATURE, "Rankine", "°R",
             KELVIN,
             new RationalConverter(5, 9));
     public static final Unit FAHRENHEIT = new Unit(TEMPERATURE, "Fahrenheit", "°F",
             RANKINE,
-            new AddConverter(459.67));
+            new AddConverter(new BigDecimal("459.67")));
 
     public static final Dimension VOLUME = new Dimension("Volume", "V");
 
