@@ -1,5 +1,7 @@
 package be.crydust.measure;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -47,12 +49,51 @@ public class Unit {
         return symbol;
     }
 
-    Unit getParent() {
-        return parent == null ? this : parent;
+    public boolean isCompatible(Unit otherUnit) {
+        if (this.equals(otherUnit)) {
+            return true;
+        }
+        return dimension.equals(otherUnit.dimension)
+                && getBase().equals(otherUnit.getBase());
     }
 
-    public List<UnitConverter> getConverters() {
-        return this.converters;
+    private Unit getBase() {
+        Unit base = this;
+        while (base.parent != null && !base.equals(base.parent)) {
+            base = base.parent;
+        }
+        return base;
+    }
+
+    private List<UnitConverter> getBaseConverters() {
+        List<UnitConverter> baseConverters = new ArrayList<>(converters);
+        Unit base = this.parent;
+        while (base != null && !base.equals(base.parent)) {
+            baseConverters.addAll(0, base.converters);
+            base = base.parent;
+        }
+        return Collections.unmodifiableList(baseConverters);
+    }
+
+    public BigDecimal convertToBase(BigDecimal value) {
+        List<UnitConverter> unitConverters = getBaseConverters();
+        BigDecimal convertedValue = value;
+        for (int i = unitConverters.size() - 1; i >= 0; i--) {
+            convertedValue = unitConverters.get(i)
+                    .convert(convertedValue);
+        }
+        return convertedValue;
+    }
+
+    public BigDecimal convertFromBase(BigDecimal value) {
+        List<UnitConverter> unitConverters = getBaseConverters();
+        BigDecimal convertedValue = value;
+        for (UnitConverter unitConverter : unitConverters) {
+            convertedValue = unitConverter
+                    .inverse()
+                    .convert(convertedValue);
+        }
+        return convertedValue;
     }
 
     @Override
@@ -71,10 +112,7 @@ public class Unit {
             return false;
         }
         final Unit other = (Unit) obj;
-        if (!Objects.equals(this.symbol, other.symbol)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.symbol, other.symbol);
     }
 
     @Override

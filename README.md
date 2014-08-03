@@ -27,6 +27,22 @@ Each Unit has a unique symbol, so store that in the database when persisting Uni
     System.out.println(bodyheatInFahrenheit.toString());
     // prints "98.6 °F"
 
+Adding Measures together works too:
+
+    // 8 lb 5 oz in g
+    Dimension mass = new Dimension("Weight", "M");
+    Unit kg = new Unit(mass, "Kilogram", "kg");
+    Unit g = new Unit(mass, "Gram", "g", kg, new DivideConverter(1000));
+    Unit lb = new Unit(mass, "Pound", "lb", kg, new RationalConverter(45359237, 100000000));
+    Unit oz = new Unit(mass, "Ounce", "oz", lb, new DivideConverter(16));
+    Measure grams = new Measure(8, lb).add(new Measure(5, oz)).convertTo(g);
+    assertThat(grams.toString(), is("3770.49 g"));
+    assertThat(grams, allOf(
+            greaterThan(new Measure(3770.45, g)),
+            lessThan(new Measure(3770.50, g)),
+            is(new Measure(new BigDecimal("3770.486575625"), g))
+    ));
+
 These are the supported dimensions and units:
 
  * M = Weight:
