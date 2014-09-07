@@ -2,14 +2,14 @@ package be.crydust.measure;
 
 import java.math.BigDecimal;
 
-public final class KitchenUnitSystem extends UnitSystem {
+public final class KitchenUnitSystem {
 
     public static final Dimension MASS = new Dimension("Weight", "M");
 
     public static final Unit KILOGRAM = new Unit(MASS, "Kilogram", "kg");
     public static final Unit GRAM = new DerivedUnit("Gram", "g")
             .of(KILOGRAM).divide(1000).build();
-    
+
     public static final Unit POUND = new DerivedUnit("Pound (US)", "lb")
             .of(KILOGRAM).rational(45359237, 100000000).build();
     public static final Unit OUNCE_US = new DerivedUnit("Ounce (US)", "oz")
@@ -66,40 +66,37 @@ public final class KitchenUnitSystem extends UnitSystem {
     public static final Unit FLUID_DRAM_US = new DerivedUnit("Dram (US)", "fl_dr")
             .of(FLUID_OUNCE_US).divide(8).build();
 
-    private static final KitchenUnitSystem INSTANCE = new KitchenUnitSystem();
+    private static final UnitSystem INSTANCE = new UnitSystem()
+            .add(MASS)
+            .add(POUND)
+            .add(OUNCE_US)
+            .add(KILOGRAM)
+            .add(GRAM)
+            .add(TEMPERATURE)
+            .add(CELSIUS)
+            .add(FAHRENHEIT)
+            .add(VOLUME)
+            .add(GALLON_UK)
+            .add(GALLON_US)
+            .add(QUART_US)
+            .add(PINT_US)
+            .add(FLUID_OUNCE_US)
+            .add(CUP_US)
+            .add(TABLESPOON_US)
+            .add(TEASPOON_US)
+            .add(FLUID_DRAM_US)
+            .add(LITER)
+            .add(DECI_LITER)
+            .add(CENTI_LITER)
+            .add(MILLI_LITER)
+            .add(QUART_UK)
+            .add(PINT_UK);
 
-    public static final KitchenUnitSystem getInstance() {
+    public static final UnitSystem getInstance() {
         return INSTANCE;
     }
 
     private KitchenUnitSystem() {
-        super();
-        add(MASS)
-                .add(POUND)
-                .add(OUNCE_US)
-                .add(KILOGRAM)
-                .add(GRAM);
-
-        add(TEMPERATURE)
-                .add(CELSIUS)
-                .add(FAHRENHEIT);
-
-        add(VOLUME)
-                .add(GALLON_UK)
-                .add(GALLON_US)
-                .add(QUART_US)
-                .add(PINT_US)
-                .add(FLUID_OUNCE_US)
-                .add(CUP_US)
-                .add(TABLESPOON_US)
-                .add(TEASPOON_US)
-                .add(FLUID_DRAM_US)
-                .add(LITER)
-                .add(DECI_LITER)
-                .add(CENTI_LITER)
-                .add(MILLI_LITER)
-                .add(QUART_UK)
-                .add(PINT_UK);
     }
 
 }

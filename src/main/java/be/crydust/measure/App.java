@@ -3,7 +3,7 @@ package be.crydust.measure;
 public class App {
 
     public static void main(String[] args) {
-        KitchenUnitSystem kitchen = KitchenUnitSystem.getInstance();
+        UnitSystem kitchen = KitchenUnitSystem.getInstance();
         if (args.length != 3) {
             System.err.println("Usage:");
             System.err.println("java -jar measure.jar 1 °C °F");

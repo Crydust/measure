@@ -60,7 +60,7 @@ public class KitchenUnitSystemTest {
 
     @Test
     public void theKitchenUnitSingletonShouldBeUseful() {
-        KitchenUnitSystem kitchen = KitchenUnitSystem.getInstance();
+        UnitSystem kitchen = KitchenUnitSystem.getInstance();
         Quantity bodyheatInFahrenheit = new Quantity(
                 37.0, kitchen.getUnit("°C"))
                 .convertTo(kitchen.getUnit("°F"));
