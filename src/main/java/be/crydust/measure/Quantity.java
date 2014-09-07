@@ -5,16 +5,16 @@ import java.math.MathContext;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class Measure implements Comparable<Measure> {
+public class Quantity implements Comparable<Quantity> {
 
     private final BigDecimal value;
     private final Unit unit;
 
-    public Measure(double value, Unit unit) {
+    public Quantity(double value, Unit unit) {
         this(BigDecimalHelper.toBigDecimal(value), unit);
     }
 
-    public Measure(BigDecimal value, Unit unit) {
+    public Quantity(BigDecimal value, Unit unit) {
         assert value != null;
         assert unit != null;
         if (value.compareTo(BigDecimal.ZERO) == 0) {
@@ -25,13 +25,13 @@ public class Measure implements Comparable<Measure> {
         this.unit = unit;
     }
 
-    public Measure convertTo(Unit otherUnit) {
+    public Quantity convertTo(Unit otherUnit) {
         assert otherUnit != null;
         if (unit.equals(otherUnit)) {
             return this;
         }
         if (unit.isCompatible(otherUnit)) {
-            return new Measure(otherUnit.convertFromBase(unit.convertToBase(value)), otherUnit);
+            return new Quantity(otherUnit.convertFromBase(unit.convertToBase(value)), otherUnit);
         }
         throw new IllegalArgumentException("cannot convert to unit with other parent");
     }
@@ -48,36 +48,36 @@ public class Measure implements Comparable<Measure> {
         return unit;
     }
 
-    public Measure add(Measure augend) {
-        return new Measure(this.value.add(augend.convertTo(this.unit).value, MathContext.DECIMAL128), this.unit);
+    public Quantity add(Quantity augend) {
+        return new Quantity(this.value.add(augend.convertTo(this.unit).value, MathContext.DECIMAL128), this.unit);
     }
 
-    public Measure subtract(Measure subtrahend) {
-        return new Measure(this.value.subtract(subtrahend.convertTo(this.unit).value, MathContext.DECIMAL128), this.unit);
+    public Quantity subtract(Quantity subtrahend) {
+        return new Quantity(this.value.subtract(subtrahend.convertTo(this.unit).value, MathContext.DECIMAL128), this.unit);
     }
 
-    public Measure divide(double divisor) {
+    public Quantity divide(double divisor) {
         return divide(BigDecimalHelper.toBigDecimal(divisor));
     }
 
-    public Measure divide(long divisor) {
+    public Quantity divide(long divisor) {
         return divide(BigDecimalHelper.toBigDecimal(divisor));
     }
 
-    public Measure divide(BigDecimal divisor) {
-        return new Measure(this.value.divide(divisor, MathContext.DECIMAL128), this.unit);
+    public Quantity divide(BigDecimal divisor) {
+        return new Quantity(this.value.divide(divisor, MathContext.DECIMAL128), this.unit);
     }
 
-    public Measure multiply(double multiplicand) {
+    public Quantity multiply(double multiplicand) {
         return divide(BigDecimalHelper.toBigDecimal(multiplicand));
     }
 
-    public Measure multiply(long multiplicand) {
+    public Quantity multiply(long multiplicand) {
         return divide(BigDecimalHelper.toBigDecimal(multiplicand));
     }
 
-    public Measure multiply(BigDecimal multiplicand) {
-        return new Measure(this.value.multiply(multiplicand, MathContext.DECIMAL128), this.unit);
+    public Quantity multiply(BigDecimal multiplicand) {
+        return new Quantity(this.value.multiply(multiplicand, MathContext.DECIMAL128), this.unit);
     }
 
     @Override
@@ -100,7 +100,7 @@ public class Measure implements Comparable<Measure> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Measure other = (Measure) obj;
+        final Quantity other = (Quantity) obj;
         if (!Objects.equals(this.unit, other.unit)) {
             return false;
         }
@@ -121,15 +121,15 @@ public class Measure implements Comparable<Measure> {
     }
 
     /**
-     * Compares this Measure with the specified Measure. Two Measure object that
-     * have a different unit, but an equivalent value are considered equal by
-     * this method. (this is not the same behavior as equals)
+     * Compares this Quantity with the specified Quantity. Two Quantity object that
+ have a different unit, but an equivalent value are considered equal by
+ this method. (this is not the same behavior as equals)
      *
      * @param otherMeasure
      * @return
      */
     @Override
-    public int compareTo(Measure otherMeasure) {
+    public int compareTo(Quantity otherMeasure) {
         Objects.requireNonNull(otherMeasure);
         int result;
         Dimension dimension = this.unit.getDimension();

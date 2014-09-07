@@ -10,23 +10,23 @@ public class KitchenUnitSystemTest {
 
     @Test
     public void aMeasureMustBeConvertibleFromZeroKilogramToGram() {
-        Measure zeroKilogram = new Measure(0.0, KILOGRAM);
-        Measure zeroGram = new Measure(0.0, GRAM);
+        Quantity zeroKilogram = new Quantity(0.0, KILOGRAM);
+        Quantity zeroGram = new Quantity(0.0, GRAM);
         assertThat(zeroKilogram, is(not(zeroGram)));
-        Measure convertedToGram = zeroKilogram.convertTo(GRAM);
+        Quantity convertedToGram = zeroKilogram.convertTo(GRAM);
         assertThat(convertedToGram.getValue(),
                 is(zeroKilogram.getValue()));
         assertThat(convertedToGram.getBigDecimalValue(),
                 is(closeTo(zeroKilogram.getBigDecimalValue(), BigDecimal.ZERO)));
         assertThat(convertedToGram, is(zeroGram));
-        Measure convertedToKilogram = convertedToGram.convertTo(KILOGRAM);
+        Quantity convertedToKilogram = convertedToGram.convertTo(KILOGRAM);
         assertThat(convertedToKilogram, is(zeroKilogram));
     }
 
     @Test
     public void aMeasureMustBeConvertibleFromOneKilogramToGram() {
-        Measure oneKilogram = new Measure(1.0, KILOGRAM);
-        Measure thousandGram = new Measure(1000.0, GRAM);
+        Quantity oneKilogram = new Quantity(1.0, KILOGRAM);
+        Quantity thousandGram = new Quantity(1000.0, GRAM);
         assertThat(oneKilogram, is(not(thousandGram)));
         assertThat(oneKilogram.convertTo(GRAM), is(thousandGram));
         assertThat(thousandGram.convertTo(KILOGRAM), is(oneKilogram));
@@ -34,8 +34,8 @@ public class KitchenUnitSystemTest {
 
     @Test
     public void aMeasureMustBeConvertibleFromOneCelsiusToFahrenheit() {
-        Measure oneCelsius = new Measure(1.0, CELSIUS);
-        Measure thirtyThreePointEightFahrenheit = new Measure(33.8, FAHRENHEIT);
+        Quantity oneCelsius = new Quantity(1.0, CELSIUS);
+        Quantity thirtyThreePointEightFahrenheit = new Quantity(33.8, FAHRENHEIT);
         assertThat(oneCelsius.convertTo(FAHRENHEIT).getValue(),
                 is(thirtyThreePointEightFahrenheit.getValue()));
         assertThat(thirtyThreePointEightFahrenheit.convertTo(CELSIUS).getValue(),
@@ -44,16 +44,16 @@ public class KitchenUnitSystemTest {
 
     @Test
     public void aMeasureMustBeConvertibleFromCupToTeaspoon() {
-        Measure oneCup = new Measure(1.0, CUP_US);
-        Measure forthyEightTeaspoon = new Measure(48, TEASPOON_US);
+        Quantity oneCup = new Quantity(1.0, CUP_US);
+        Quantity forthyEightTeaspoon = new Quantity(48, TEASPOON_US);
         assertThat(oneCup.convertTo(TEASPOON_US), is(forthyEightTeaspoon));
         assertThat(forthyEightTeaspoon.convertTo(CUP_US), is(oneCup));
     }
 
     @Test
     public void aMeasureMustBeConvertibleFromPoundToGram() {
-        Measure onePound = new Measure(1.0, POUND);
-        Measure lotsOfGrams = new Measure(453.59237, GRAM);
+        Quantity onePound = new Quantity(1.0, POUND);
+        Quantity lotsOfGrams = new Quantity(453.59237, GRAM);
         assertThat(onePound.convertTo(GRAM), is(lotsOfGrams));
         assertThat(lotsOfGrams.convertTo(POUND), is(onePound));
     }
@@ -61,7 +61,7 @@ public class KitchenUnitSystemTest {
     @Test
     public void theKitchenUnitSingletonShouldBeUseful() {
         KitchenUnitSystem kitchen = KitchenUnitSystem.getInstance();
-        Measure bodyheatInFahrenheit = new Measure(
+        Quantity bodyheatInFahrenheit = new Quantity(
                 37.0, kitchen.getUnit("°C"))
                 .convertTo(kitchen.getUnit("°F"));
         assertThat(bodyheatInFahrenheit.toString(), is("98.6 °F"));

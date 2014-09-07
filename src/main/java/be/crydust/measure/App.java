@@ -14,10 +14,10 @@ public class App {
         final String originalValueAsString = args[0];
         final String originalUnitSymbol = args[1];
         final String convertedUnitSymbol = args[2];
-        Measure original = new Measure(
+        Quantity original = new Quantity(
                 Double.parseDouble(originalValueAsString),
                 kitchen.getUnit(originalUnitSymbol));
-        Measure converted = original
+        Quantity converted = original
                 .convertTo(kitchen.getUnit(convertedUnitSymbol));
         System.out.printf("%s = %s%n", original, converted);
     }
