@@ -45,6 +45,20 @@ public class UnitSystem {
         return this;
     }
 
+    public UnitSystem add(Dimension... dimensions) {
+        for (Dimension dimension : dimensions) {
+            add(dimension);
+        }
+        return this;
+    }
+
+    public UnitSystem add(Unit... units) {
+        for (Unit unit : units) {
+            add(unit);
+        }
+        return this;
+    }
+
     public Dimension getDimension(String symbol) {
         return symbolToDimensionMap.get(symbol);
     }

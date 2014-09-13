@@ -68,29 +68,13 @@ public final class KitchenUnitSystem {
 
     private static final UnitSystem INSTANCE = new UnitSystem()
             .add(MASS)
-            .add(POUND)
-            .add(OUNCE_US)
-            .add(KILOGRAM)
-            .add(GRAM)
+            .add(POUND, OUNCE_US, KILOGRAM, GRAM)
             .add(TEMPERATURE)
-            .add(CELSIUS)
-            .add(FAHRENHEIT)
+            .add(CELSIUS, FAHRENHEIT)
             .add(VOLUME)
-            .add(GALLON_UK)
-            .add(GALLON_US)
-            .add(QUART_US)
-            .add(PINT_US)
-            .add(FLUID_OUNCE_US)
-            .add(CUP_US)
-            .add(TABLESPOON_US)
-            .add(TEASPOON_US)
-            .add(FLUID_DRAM_US)
-            .add(LITER)
-            .add(DECI_LITER)
-            .add(CENTI_LITER)
-            .add(MILLI_LITER)
-            .add(QUART_UK)
-            .add(PINT_UK);
+            .add(GALLON_UK, GALLON_US, QUART_US, PINT_US, FLUID_OUNCE_US,
+                    CUP_US, TABLESPOON_US, TEASPOON_US, FLUID_DRAM_US, LITER,
+                    DECI_LITER, CENTI_LITER, MILLI_LITER, QUART_UK, PINT_UK);
 
     public static final UnitSystem getInstance() {
         return INSTANCE;
